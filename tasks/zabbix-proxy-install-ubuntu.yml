@@ -58,7 +58,8 @@
   community.mysql.mysql_variables:
     variable: log_bin_trust_function_creators
     value: 1
-
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
 
 - name: "Copy MariaDB / MySQL database schema to the docker container"
   raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/proxy.sql
