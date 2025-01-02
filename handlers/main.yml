@@ -1,0 +1,26 @@
+---
+# Title: Zabbix proxy install Ubuntu
+#
+# Author: bitfinity-nl
+# Owner: bitfinity-nl
+#
+# File: tasks/handlers/main.yml
+#
+# Description:
+#   Taskfile for deploying Zabbix proxy on Ubuntu.
+#
+- name: "import zabbix-dbschema"
+  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zbx_mariadb_root }} -p{{ zbx_mariadb_root_pwd }} {{ zbx_mariadb_dbname }}"
+
+- name: "reboot_server"
+  ansible.builtin.reboot:
+  
+- name: "enable_restart_zabbix-proxy"
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+    masked: no
+  loop:
+    - zabbix-proxy
+    - zabbix-agent
