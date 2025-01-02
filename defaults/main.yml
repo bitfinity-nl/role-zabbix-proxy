@@ -21,7 +21,7 @@
 #   zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
 #
 zabbix_proxy_administrative_user : 'root'
-zabbix_proxy_administrative_pass : '{{ global_'
+zabbix_proxy_administrative_pass : '{{ global_mariadb_root_pass }}'
 zabbix_proxy_dbname              : 'zabbix_proxy'
 zabbix_proxy_dbuser              : 'zabbix'
 zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
