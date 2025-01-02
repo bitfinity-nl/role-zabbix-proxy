@@ -57,15 +57,16 @@
 
 - name: "Transfer templates to {{ ansible_hostname }}"
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
+    src: "{{ zabbix_template.src }}"
+    dest: "{{ zabbix_template.dest }}"
+    owner: "{{ zabbix_template.owner }}"
+    group: "{{ zabbix_template.group }}"
+    mode: "{{ zabbix_template.mode }}"
     backup: yes
-  with_items:
+  loop:
     - { src: 'templates/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0600' }
-
+  loop_control:
+    loop_var: zabbix_template
 
 # --
 #- name: "Enable Zabbix proxy {{ item.version }} on startup on host '{{ ansible_hostname }}'"
