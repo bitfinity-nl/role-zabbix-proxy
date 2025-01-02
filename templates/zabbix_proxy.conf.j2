@@ -11,6 +11,7 @@
 # Mandatory: no
 # Default:
 # ProxyMode=0
+ProxyMode={{ zabbix_proxy_proxymode }}
 
 ### Option: Server
 #	If ProxyMode is set to active mode:
@@ -29,7 +30,7 @@
 # Default:
 # Server=
 
-Server=127.0.0.1
+Server={{ zabbix_proxy_server }}
 
 ### Option: Hostname
 #	Unique, case sensitive Proxy name. Make sure the Proxy name is known to the server!
@@ -39,7 +40,7 @@ Server=127.0.0.1
 # Default:
 # Hostname=
 
-Hostname=Zabbix proxy
+Hostname={{ ansible_hostname }}
 
 ### Option: HostnameItem
 #	Item used for generating Hostname if it is undefined.
@@ -116,6 +117,7 @@ LogFileSize=0
 # Mandatory: no
 # Default:
 # EnableRemoteCommands=0
+EnableRemoteCommands={{ zabbix_proxy_enableremotecommands }}
 
 ### Option: LogRemoteCommands
 #		Enable logging of executed shell commands as warnings.
@@ -125,6 +127,7 @@ LogFileSize=0
 # Mandatory: no
 # Default:
 # LogRemoteCommands=0
+LogRemoteCommands={{ zabbix_proxy_logremotecommands }}
 
 ### Option: PidFile
 #	Name of PID file.
@@ -157,6 +160,7 @@ SocketDir=/run/zabbix
 # Mandatory: no
 # Default:
 # DBHost=localhost
+DBHost={{ zabbix_proxy_dbhost }}
 
 ### Option: DBName
 #	Database name.
@@ -170,7 +174,7 @@ SocketDir=/run/zabbix
 # Default:
 # DBName=
 
-DBName=zabbix_proxy
+DBName={{ zabbix_proxy_dbname }}
 
 ### Option: DBSchema
 #	Schema name. Used for PostgreSQL.
@@ -185,7 +189,7 @@ DBName=zabbix_proxy
 # Default:
 # DBUser=
 
-DBUser=zabbix
+DBUser={{ zabbix_proxy_dbuser }}
 
 ### Option: DBPassword
 #	Database password. Ignored for SQLite.
@@ -194,6 +198,7 @@ DBUser=zabbix
 # Mandatory: no
 # Default:
 # DBPassword=
+DBPassword={{ zabbix_proxy_dbpass }}
 
 ### Option: DBSocket
 #	Path to MySQL socket.
