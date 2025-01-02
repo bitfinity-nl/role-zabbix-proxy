@@ -1,0 +1,85 @@
+---
+# Title: Zabbix proxy install Ubuntu
+#
+# Author: bitfinity-nl
+# Owner: bitfinity-nl
+#
+# File: tasks/ubuntu/zabbix-proxy-install-ubuntu.yml
+#
+# Description:
+#   Taskfile for deploying Zabbix proxy on Ubuntu.
+#
+- name: "Download & Install Zabbix {{ item.version }} deb package from '{{ item.ubuntu_source }}' on host '{{ ansible_hostname }}'"
+  ansible.builtin.apt:
+    deb: "{{ item.ubuntu_source }}"
+    state: present
+
+- name: "Update & Upgrade APT repositories on host '{{ ansible_hostname }}'"
+  ansible.builtin.apt:
+    upgrade: dist
+    
+- name: "Install Zabbix components {{ item.version }} via APT on host '{{ ansible_hostname }}'"
+  ansible.builtin.apt:
+    name: "{{ packages.name }}"
+    state: present
+    update_cache: yes
+  loop:
+    - { name:'zabbix-proxy-mysql', desc: 'Zabbix Proxy' }
+    - { name: 'zabbix-sql-scripts', desc: 'Zabbix SQL-scripts' }
+  loop_control:
+    loop_var: packages
+
+#--
+
+- name: "Create initial database"
+  community.mysql.mysql_db:
+    name: "{{ zabbix_proxy_dbname }}"
+    encoding: utf8
+    collation: utf8_bin
+    state: present
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
+  notify:
+    - import zabbix-dbschema
+    - enable_restart_zabbix-proxy
+    - reboot_server
+
+- name: "Create initial database user"
+  community.mysql.mysql_user:
+    name: "{{ zabbix_proxy_dbuser }}"
+    password: "{{ zabbix_proxy_dbpass }}"
+    priv: "{{ zabbix_proxy_dbname }}.*:ALL,GRANT"
+    state: present
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
+  no_log: True
+
+
+- name: "Transfer templates to {{ ansible_host }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    backup: yes
+  with_items:
+    - { src: 'server/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0644' }
+
+
+# --
+- name: "Enable Zabbix proxy {{ item.version }} on startup on host '{{ ansible_hostname }}'"
+  ansible.builtin.systemd:
+    name: zabbix-proxy
+    state: restarted
+    enabled: yes
+
+- name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
+  community.general.ufw:
+    rule: allow
+    port: "{{ ufw.port }}"
+    proto: "{{ ufw.proto }}"
+  loop:
+    - { port: '10050', proto: 'tcp', desc: 'Allow traffic from Zabbix server to Zabbix Agent (Passive) on port 10050/tcp' }
+  loop_control:
+    loop_var: ufw
