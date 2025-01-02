@@ -68,11 +68,11 @@
 
 
 # --
-- name: "Enable Zabbix proxy {{ item.version }} on startup on host '{{ ansible_hostname }}'"
-  ansible.builtin.systemd:
-    name: zabbix-proxy
-    state: restarted
-    enabled: yes
+#- name: "Enable Zabbix proxy {{ item.version }} on startup on host '{{ ansible_hostname }}'"
+#  ansible.builtin.systemd:
+#    name: zabbix-proxy
+#    state: restarted
+#    enabled: yes
 
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
   community.general.ufw:
