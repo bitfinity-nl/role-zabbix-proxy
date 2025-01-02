@@ -1,0 +1,46 @@
+---
+# Title: Defaults for Zabbix proxy.
+#
+# Author: bitfinity-nl
+# Owner: bitfinity-nl
+#
+# File: defaults/main.yml
+#
+# Description:
+#   This default/main.yml file contains the default settings for
+#   Zabbix proxy, these setting can be overridden in playbooks.
+
+
+# -- Zabbix proxy settings --
+#
+# Variable(s):
+#   zabbix_proxy_administrative_user : 'root'
+#   zabbix_proxy_administrative_pass : '{{ global_mariadb_root_pass }}'
+#   zabbix_proxy_dbname              : 'zabbix_proxy'
+#   zabbix_proxy_dbuser              : 'zabbix'
+#   zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
+#
+zabbix_proxy_administrative_user : 'root'
+zabbix_proxy_administrative_pass : '{{ global_'
+zabbix_proxy_dbname              : 'zabbix_proxy'
+zabbix_proxy_dbuser              : 'zabbix'
+zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
+
+
+# -- Zabbix repository settings --
+# 
+# Variable(s):
+#   zabbix_install_version            : '7'                                                                                                                                                 # Zabbix version that is going to be installed.
+#   zabbix_repository:
+#     - { version                     : '7',                                                                                                                                                # Zabbix version.
+#         ubuntu_source               : 'https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu{{ ansible_distribution_version }}_all.deb',  # Source URL to Zabbix DEB-package.                                                                                                                                             # Checksum algorithem for the Zabbix agent archive package.
+#         }
+#
+zabbix_install_version            : '7'
+zabbix_repository:
+  - { version                     : '7',
+      ubuntu_source               : 'https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu{{ ansible_distribution_version }}_all.deb',
+      }
+  - { version                     : '6',
+      ubuntu_source               : 'https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_6.0+ubuntu{{ ansible_distribution_version }}_all.deb',
+      }
