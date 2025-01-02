@@ -59,6 +59,12 @@
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
+  
+- name: "Copy MariaDB / MySQL database schema to the docker container"
+  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/proxy.sql
+
+- name: "Import database schema into docker container mariadb"
+  raw: docker exec -it mariadb bash -c 'cat /proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p0penSourceDatabas3 zabbix_proxy '
 
 - name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_variables:
@@ -68,13 +74,7 @@
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
   
-- name: "Copy MariaDB / MySQL database schema to the docker container"
-  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/proxy.sql
-
-- name: "Import database schema into docker container mariadb"
-  raw: docker exec -it mariadb bash -c 'cat /proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p0penSourceDatabas3 zabbix_proxy '
-
-- name: "Transfer templates to {{ ansible_hostname }}"
+- name: "Transfer templates to {{ ansible_hostname }} on host '{{ ansible_hostname }}'"
   template:
     src: "{{ zabbix_template.src }}"
     dest: "{{ zabbix_template.dest }}"
