@@ -91,14 +91,6 @@
     - { src: 'templates/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0600' }
   loop_control:
     loop_var: zabbix_template
-
-#- name: "import zabbix-dbschema"
-  # ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
-#  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | docker exec -i mariadb -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
-
-#docker exec -it mariadb bash -c 'mariadb -u root -p'
-#- name: "reboot_server"
-#  ansible.builtin.reboot:
   
 - name: "enable_restart_zabbix-proxy"
   ansible.builtin.systemd:
