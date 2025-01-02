@@ -32,8 +32,8 @@
 - name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
-    encoding: utf8
-    collation: utf8_bin
+    encoding: utf8mb4
+    collation: utf8mb4_bin
     state: present
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
