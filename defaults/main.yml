@@ -20,11 +20,20 @@
 #   zabbix_proxy_dbuser              : 'zabbix'
 #   zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
 #
-zabbix_proxy_administrative_user : 'root'
-zabbix_proxy_administrative_pass : '{{ global_mariadb_root_pass }}'
-zabbix_proxy_dbname              : 'zabbix_proxy'
-zabbix_proxy_dbuser              : 'zabbix'
-zabbix_proxy_dbpass              : 'useryourowndatabasepassword' 
+zabbix_proxy_administrative_user  : 'root'
+zabbix_proxy_administrative_pass  : '{{ global_mariadb_root_pass }}'
+zabbix_proxy_dbname               : 'zabbix_proxy'
+zabbix_proxy_dbuser               : 'zabbix'
+zabbix_proxy_dbpass               : 'useryourowndatabasepassword' 
+zabbix_proxy_dbhost               : '127.0.0.1'
+
+zabbix_proxy_proxymode            : '0'
+zabbix_proxy_server               : 'zabbix-proxy.example.com'
+zabbix_proxy_logfile              : '/var/log/zabbix/zabbix_proxy.log'
+zabbix_proxy_LogFileSize          : '1'
+zabbix_proxy_enableremotecommands : '1'
+zabbix_proxy_logremotecommands    : '1'
+
 
 
 # -- Zabbix repository settings --
