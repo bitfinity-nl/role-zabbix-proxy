@@ -37,6 +37,7 @@
     state: present
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
+  register: database_status
 #  notify:
 #    - import zabbix-dbschema
 #    - enable_restart_zabbix-proxy
@@ -64,7 +65,8 @@
   raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
 
 - name: "Import database schema into docker container mariadb"
-  raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy '
+  raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
+  raw: docker touch /zabbix_proxy_installed mariadb:/zabbix_proxy.sql
   no_log: True
  
 - name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
