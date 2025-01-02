@@ -57,24 +57,14 @@
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
-
-- name: "Import database schema 'zabbix_proxy.sql' into docker container 'mariadb' on host '{{ ansible_hostname }}'"
-  community.mysql.mysql_db:
-    name: zabbix_proxy.sql
-    state: import
-    target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
-    login_user: "{{ zabbix_proxy_administrative_user }}"
-    login_password: "{{ zabbix_proxy_administrative_pass }}"
-  #when: database_exists.changed == 'true'
-  #no_log: True  
     
-#- name: "Copy MariaDB / MySQL database schema to the docker container"
-#  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
+- name: "Copy MariaDB / MySQL database schema to the docker container"
+  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
 
-#- name: "Import database schema into docker container mariadb"
-#  raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
-#  raw: docker touch /zabbix_proxy_installed mariadb:/zabbix_proxy.sql
-#  no_log: True
+- name: "Import database schema into docker container mariadb"
+  raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
+  raw: docker touch /zabbix_proxy_installed mariadb:/zabbix_proxy.sql
+  no_log: True
  
 - name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_variables:
