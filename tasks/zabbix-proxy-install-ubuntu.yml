@@ -45,12 +45,6 @@
     state: present
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
-  community.mysql.mysql_db:
-    name: zabbix_proxy.sql
-    state: import
-    target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
-    login_user: "{{ zabbix_proxy_administrative_user }}"
-    login_password: "{{ zabbix_proxy_administrative_pass }}"
   register: database_exists
   no_log: false
 
@@ -64,15 +58,15 @@
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
 
-#- name: "Import database schema 'zabbix_proxy.sql' into docker container 'mariadb' on host '{{ ansible_hostname }}'"
-#  community.mysql.mysql_db:
-#    name: zabbix_proxy.sql
-#    state: import
-#    target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
-#    login_user: "{{ zabbix_proxy_administrative_user }}"
-#    login_password: "{{ zabbix_proxy_administrative_pass }}"
-#  when: database_exists.changed == true
-#  no_log: True  
+- name: "Import database schema 'zabbix_proxy.sql' into docker container 'mariadb' on host '{{ ansible_hostname }}'"
+  community.mysql.mysql_db:
+    name: zabbix_proxy.sql
+    state: import
+    target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
+  when: database_exists.changed == true
+  no_log: True  
     
 #- name: "Copy MariaDB / MySQL database schema to the docker container"
 #  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
