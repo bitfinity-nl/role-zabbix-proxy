@@ -31,7 +31,7 @@
 
 #--
 
-- name: "Create initial database"
+- name: "Create initial database on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
     encoding: utf8
@@ -44,7 +44,7 @@
     - enable_restart_zabbix-proxy
     - reboot_server
 
-- name: "Create initial database user"
+- name: "Create initial database user on host '{{ ansible_hostname }}'"
   community.mysql.mysql_user:
     name: "{{ zabbix_proxy_dbuser }}"
     password: "{{ zabbix_proxy_dbpass }}"
