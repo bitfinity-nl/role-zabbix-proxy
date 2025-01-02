@@ -64,7 +64,7 @@
     mode: "{{ item.mode }}"
     backup: yes
   with_items:
-    - { src: 'server/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0644' }
+    - { src: 'templates/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0600' }
 
 
 # --
