@@ -75,7 +75,7 @@
 #    state: restarted
 #    enabled: yes
 - name: "import zabbix-dbschema"
-  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zbx_mariadb_root }} -p{{ zbx_mariadb_root_pwd }} {{ zbx_mariadb_dbname }}"
+  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
 
 #- name: "reboot_server"
 #  ansible.builtin.reboot:
