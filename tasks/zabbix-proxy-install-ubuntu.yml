@@ -38,10 +38,7 @@
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   register: database_exists
-#  notify:
-#    - import zabbix-dbschema
-#    - enable_restart_zabbix-proxy
-#    - reboot_server
+  no_log: True
 
 - name: "Create initial database user on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_user:
@@ -61,7 +58,7 @@
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
 
-- name: Restore database
+- name: "Import database schema 'zabbix_proxy.sql' into docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
     name: zabbix_proxy.sql
     state: import
@@ -69,7 +66,7 @@
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   when: database_exists.changed == 'true'
-  no_log: false  
+  no_log: True  
     
 #- name: "Copy MariaDB / MySQL database schema to the docker container"
 #  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
