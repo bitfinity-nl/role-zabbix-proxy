@@ -55,7 +55,7 @@
   no_log: True
 
 
-- name: "Transfer templates to {{ ansible_host }}"
+- name: "Transfer templates to {{ ansible_hostname }}"
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
