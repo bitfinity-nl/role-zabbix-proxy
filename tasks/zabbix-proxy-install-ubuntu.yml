@@ -65,7 +65,7 @@
     target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
-  when: database_exists.changed == 'true'
+  when: database_exists.changed == true
   no_log: True  
     
 #- name: "Copy MariaDB / MySQL database schema to the docker container"
