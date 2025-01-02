@@ -11,5 +11,5 @@
 #    of the Zabbix agent wil be installed.
 #  
 - name: "Install Zabbix proxy when the install version '{{ zabbix_install_version }}' is equal to the profile version '{{ item.version }}' on host '{{ ansible_hostname }}'"
-  include_tasks: tasks/ubuntu/zabbix-proxy-install-ubuntu.yml
+  include_tasks: tasks/zabbix-proxy-install-ubuntu.yml
   when: zabbix_install_version == item.version
