@@ -65,7 +65,8 @@
 
 - name: "Import database schema into docker container mariadb"
   raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy '
-
+  no_log: True
+ 
 - name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_variables:
     variable: log_bin_trust_function_creators
