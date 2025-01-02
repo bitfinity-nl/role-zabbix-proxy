@@ -1,0 +1,13 @@
+---
+# Title: role-zabbix-proxy
+#
+# Author: bitfinity-nl
+# File: tasks/main.yml
+#
+# Description:
+#   Playbook for deploying Zabbix proxy.
+#
+- name: "Install Zabbix proxy when operating system is Ubuntu on host '{{ ansible_hostname }}'"
+  include_tasks: tasks/ubuntu/zabbix-proxy-install.yml
+  with_items: "{{ zabbix_repository }}"
+  when: ansible_distribution == "Ubuntu"
