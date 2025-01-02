@@ -24,7 +24,7 @@
     state: present
     update_cache: yes
   loop:
-    - { name:'zabbix-proxy-mysql', desc: 'Zabbix Proxy' }
+    - { name: 'zabbix-proxy-mysql', desc: 'Zabbix Proxy' }
     - { name: 'zabbix-sql-scripts', desc: 'Zabbix SQL-scripts' }
   loop_control:
     loop_var: packages
