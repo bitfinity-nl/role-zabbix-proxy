@@ -37,7 +37,7 @@
     state: present
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
-  register: database_status
+  register: database_exists
 #  notify:
 #    - import zabbix-dbschema
 #    - enable_restart_zabbix-proxy
@@ -68,6 +68,7 @@
     target: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
+  when: database_exists.changed == 'true'
   no_log: false  
     
 #- name: "Copy MariaDB / MySQL database schema to the docker container"
