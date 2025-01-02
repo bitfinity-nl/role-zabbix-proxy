@@ -76,7 +76,7 @@
 #    enabled: yes
 - name: "import zabbix-dbschema"
   # ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
-  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | docker exec -i mysql -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
+  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | docker exec -i mariadb -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
 
 #docker exec -it mariadb bash -c 'mariadb -u root -p'
 #- name: "reboot_server"
