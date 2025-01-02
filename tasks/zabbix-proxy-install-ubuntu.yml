@@ -29,9 +29,7 @@
   loop_control:
     loop_var: packages
 
-#--
-
-- name: "Create initial database on host '{{ ansible_hostname }}'"
+- name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
     encoding: utf8
@@ -44,7 +42,7 @@
 #    - enable_restart_zabbix-proxy
 #    - reboot_server
 
-- name: "Create initial database user on host '{{ ansible_hostname }}'"
+- name: "Create initial database user on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_user:
     name: "{{ zabbix_proxy_dbuser }}"
     password: "{{ zabbix_proxy_dbpass }}"
@@ -89,15 +87,9 @@
   loop_control:
     loop_var: zabbix_template
 
-# --
-#- name: "Enable Zabbix proxy {{ item.version }} on startup on host '{{ ansible_hostname }}'"
-#  ansible.builtin.systemd:
-#    name: zabbix-proxy
-#    state: restarted
-#    enabled: yes
-- name: "import zabbix-dbschema"
+#- name: "import zabbix-dbschema"
   # ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
-  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | docker exec -i mariadb -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
+#  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | docker exec -i mariadb -u {{ zabbix_proxy_administrative_user }} -p{{ zabbix_proxy_administrative_pass }} {{ mariadb_database }}"
 
 #docker exec -it mariadb bash -c 'mariadb -u root -p'
 #- name: "reboot_server"
@@ -111,7 +103,7 @@
     masked: no
   loop:
     - zabbix-proxy
-    - zabbix-agent
+#    - zabbix-agent
     
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
   community.general.ufw:
