@@ -58,7 +58,12 @@
   no_log: True
     
 - name: "Copy MariaDB / MySQL database schema to the docker container"
-  raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
+  #raw: docker cp /usr/share/zabbix-sql-scripts/mysql/proxy.sql mariadb:/zabbix_proxy.sql
+  community.docker.docker_container_copy_into:
+    container: mariadb
+    path: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
+    container_path: /zabbix_proxy.sql
+  register: zabbix_proxy_script
 
 - name: "Import database schema into docker container mariadb"
   raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
