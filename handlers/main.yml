@@ -9,7 +9,7 @@
 # Description:
 #   Taskfile for deploying Zabbix proxy on Ubuntu.
 #  
-- name: "enable_start_zabbix-proxy"
+- name: "systemd_enable_start_bbix-proxy"
   ansible.builtin.systemd:
     name: "{{ systemd_service }}"
     state: started
