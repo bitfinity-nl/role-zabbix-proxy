@@ -8,13 +8,7 @@
 #
 # Description:
 #   Taskfile for deploying Zabbix proxy on Ubuntu.
-#
-- name: "import zabbix-dbschema"
-  ansible.builtin.raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zbx_mariadb_root }} -p{{ zbx_mariadb_root_pwd }} {{ zbx_mariadb_dbname }}"
-
-- name: "reboot_server"
-  ansible.builtin.reboot:
-  
+#  
 - name: "enable_start_zabbix-proxy"
   ansible.builtin.systemd:
     name: "{{ systemd_service }}"
@@ -27,7 +21,6 @@
     loop_var:
      - systemd_service
   
-
 - name: "disable_global_log_bin_trust_function_creators"
   community.mysql.mysql_variables:
     variable: log_bin_trust_function_creators
