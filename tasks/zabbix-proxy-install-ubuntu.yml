@@ -29,13 +29,13 @@
   loop_control:
     loop_var: packages
 
-- name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '1' on host '{{ ansible_hostname }}'"
-  community.mysql.mysql_variables:
-    variable: log_bin_trust_function_creators
-    value: 1
-    login_user: "{{ zabbix_proxy_administrative_user }}"
-    login_password: "{{ zabbix_proxy_administrative_pass }}"
-  no_log: True
+#- name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '1' on host '{{ ansible_hostname }}'"
+#  community.mysql.mysql_variables:
+#    variable: log_bin_trust_function_creators
+#    value: 1
+#    login_user: "{{ zabbix_proxy_administrative_user }}"
+#    login_password: "{{ zabbix_proxy_administrative_pass }}"
+#  no_log: True
   
 - name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
@@ -63,6 +63,7 @@
     path: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
     container_path: /zabbix_proxy.sql
   notify:
+    - global_log_bin_trust_function_creators
     - import_database_schema
     - enable_global_log_bin_trust_function_creators
   register: zabbix_proxy_script
