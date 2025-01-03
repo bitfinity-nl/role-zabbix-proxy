@@ -18,9 +18,8 @@
   loop:
     - zabbix-proxy
   loop_control:
-    loop_var:
-     - systemd_service
-  
+    loop_var: systemd_service
+    
 - name: "mariadb_disable_global_log_bin_trust_function_creators"
   community.mysql.mysql_variables:
     variable: log_bin_trust_function_creators
