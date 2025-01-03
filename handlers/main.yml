@@ -25,6 +25,14 @@
     - zabbix-proxy
     - zabbix-agent
 
+- name: "disable_global_log_bin_trust_function_creators"
+  community.mysql.mysql_variables:
+    variable: log_bin_trust_function_creators
+    value: 1
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
+  no_log: True
+
 - name: "import_database_schema"
   raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
   no_log: True
