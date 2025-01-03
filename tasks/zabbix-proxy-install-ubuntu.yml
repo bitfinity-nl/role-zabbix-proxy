@@ -58,7 +58,7 @@
     - mariadb_disable_global_log_bin_trust_function_creators
     - mariadb_import_database_schema
     - mariadb_enable_global_log_bin_trust_function_creators
-    - systemd_enable_start_bbix-proxy
+    - systemd_enable_start_zabbix-proxy
   register: zabbix_proxy_script
   
 - name: "Transfer templates to {{ ansible_hostname }} on host '{{ ansible_hostname }}'"
