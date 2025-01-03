@@ -15,15 +15,18 @@
 - name: "reboot_server"
   ansible.builtin.reboot:
   
-- name: "enable_restart_zabbix-proxy"
+- name: "enable_start_zabbix-proxy"
   ansible.builtin.systemd:
-    name: "{{ item }}"
-    state: restarted
+    name: "{{ systemd_service }}"
+    state: started
     enabled: yes
     masked: no
   loop:
     - zabbix-proxy
-    - zabbix-agent
+  loop_control:
+    loop_var:
+     - systemd_service
+  
 
 - name: "disable_global_log_bin_trust_function_creators"
   community.mysql.mysql_variables:
