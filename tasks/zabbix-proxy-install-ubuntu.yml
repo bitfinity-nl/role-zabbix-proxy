@@ -63,8 +63,8 @@
     path: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
     container_path: /zabbix_proxy.sql
   notify:
-    - "Import database schema into docker container mariadb"
-    - "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
+    - import_database_schema
+    - enable_global_log_bin_trust_function_creators
   register: zabbix_proxy_script
 
 #- name: "Import database schema into docker container mariadb"
