@@ -28,15 +28,7 @@
     - { name: 'zabbix-sql-scripts', desc: 'Zabbix SQL-scripts' }
   loop_control:
     loop_var: packages
-
-#- name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '1' on host '{{ ansible_hostname }}'"
-#  community.mysql.mysql_variables:
-#    variable: log_bin_trust_function_creators
-#    value: 1
-#    login_user: "{{ zabbix_proxy_administrative_user }}"
-#    login_password: "{{ zabbix_proxy_administrative_pass }}"
-#  no_log: True
-  
+    
 - name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
@@ -66,19 +58,8 @@
     - disable_global_log_bin_trust_function_creators
     - import_database_schema
     - enable_global_log_bin_trust_function_creators
+    - systemd_enable_start_bbix-proxy
   register: zabbix_proxy_script
-
-#- name: "Import database schema into docker container mariadb"
-#  raw: docker exec -it mariadb bash -c 'cat /zabbix_proxy.sql | mariadb --default-character-set=utf8mb4 -uroot -p{{ zabbix_proxy_administrative_pass }} zabbix_proxy'
-#  no_log: True
- 
-#- name: "Set 'global log_bin_trust_function_creators' in docker container 'mariadb' to '0' on host '{{ ansible_hostname }}'"
-#  community.mysql.mysql_variables:
-#    variable: log_bin_trust_function_creators
-#    value: 0
-#    login_user: "{{ zabbix_proxy_administrative_user }}"
-#    login_password: "{{ zabbix_proxy_administrative_pass }}"
-#  no_log: True
   
 - name: "Transfer templates to {{ ansible_hostname }} on host '{{ ansible_hostname }}'"
   template:
@@ -92,18 +73,7 @@
     - { src: 'templates/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0600' }
   loop_control:
     loop_var: zabbix_template
-  
-#- name: "enable_restart_zabbix-proxy"
-#  ansible.builtin.systemd:
-#    name: "{{ systemd_services }}"
-#    state: restarted
-#    enabled: yes
-#    masked: no
-#  loop:
-#    - zabbix-proxy
-#  loop_control:
-#    loop_var: systemd_services
-    
+      
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
   community.general.ufw:
     rule: allow
