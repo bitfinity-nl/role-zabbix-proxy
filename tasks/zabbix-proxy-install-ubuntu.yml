@@ -63,7 +63,7 @@
     path: /usr/share/zabbix-sql-scripts/mysql/proxy.sql
     container_path: /zabbix_proxy.sql
   notify:
-    - global_log_bin_trust_function_creators
+    - disable_global_log_bin_trust_function_creators
     - import_database_schema
     - enable_global_log_bin_trust_function_creators
   register: zabbix_proxy_script
