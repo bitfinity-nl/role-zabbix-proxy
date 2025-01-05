@@ -74,7 +74,7 @@
   loop_control:
     loop_var: zabbix_template
   notify:
-    - systemd_enable_start_zabbix-proxy
+    - systemd_restart_zabbix-proxy
     
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
   community.general.ufw:
