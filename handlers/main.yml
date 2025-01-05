@@ -39,3 +39,8 @@
     - zabbix-proxy
   loop_control:
     loop_var: systemd_service
+
+- name: "systemd_restart_zabbix-proxy"
+  ansible.builtin.systemd:
+    name: zabbix-proxy
+    state: restarted
