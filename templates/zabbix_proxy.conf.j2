@@ -57,6 +57,7 @@ Hostname={{ ansible_hostname }}
 # Range: 1024-32767
 # Default:
 # ListenPort=10051
+ListenPort={{ zabbix_proxy_listenport }}
 
 ### Option: SourceIP
 #	Source IP address for outgoing connections.
@@ -82,7 +83,7 @@ Hostname={{ ansible_hostname }}
 # Default:
 # LogFile=
 
-LogFile=/var/log/zabbix/zabbix_proxy.log
+LogFile={{ zabbix_proxy_logfile }}
 
 ### Option: LogFileSize
 #	Maximum size of log file in MB.
@@ -93,7 +94,7 @@ LogFile=/var/log/zabbix/zabbix_proxy.log
 # Default:
 # LogFileSize=1
 
-LogFileSize=0
+LogFileSize={{ zabbix_proxy_LogFileSize }}
 
 ### Option: DebugLevel
 #	Specifies debug level:
