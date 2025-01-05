@@ -29,6 +29,7 @@ zabbix_proxy_dbhost               : '127.0.0.1'
 
 zabbix_proxy_proxymode            : '0'
 zabbix_proxy_server               : 'zabbix-proxy.example.com'
+zabbix_proxy_listenport           : '10051'
 zabbix_proxy_logfile              : '/var/log/zabbix/zabbix_proxy.log'
 zabbix_proxy_LogFileSize          : '1'
 zabbix_proxy_enableremotecommands : '1'
