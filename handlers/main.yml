@@ -9,17 +9,6 @@
 # Description:
 #   Taskfile for deploying Zabbix proxy on Ubuntu.
 #  
-- name: "systemd_enable_start_zabbix-proxy"
-  ansible.builtin.systemd:
-    name: "{{ systemd_service }}"
-    state: started
-    enabled: yes
-    masked: no
-  loop:
-    - zabbix-proxy
-  loop_control:
-    loop_var: systemd_service
-    
 - name: "mariadb_disable_global_log_bin_trust_function_creators"
   community.mysql.mysql_variables:
     variable: log_bin_trust_function_creators
@@ -39,3 +28,14 @@
     login_user: "{{ zabbix_proxy_administrative_user }}"
     login_password: "{{ zabbix_proxy_administrative_pass }}"
   no_log: True
+
+- name: "systemd_enable_start_zabbix-proxy"
+  ansible.builtin.systemd:
+    name: "{{ systemd_service }}"
+    state: started
+    enabled: yes
+    masked: no
+  loop:
+    - zabbix-proxy
+  loop_control:
+    loop_var: systemd_service
