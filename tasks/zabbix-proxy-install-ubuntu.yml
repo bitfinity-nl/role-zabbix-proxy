@@ -73,7 +73,9 @@
     - { src: 'templates/zabbix_proxy.conf.j2', dest: '/etc/zabbix/zabbix_proxy.conf', owner: 'root', group: 'root', mode: '0600' }
   loop_control:
     loop_var: zabbix_template
-      
+  notify:
+    - systemd_enable_start_zabbix-proxy
+    
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive on port 10050/tcp) on host '{{ ansible_hostname }}'"
   community.general.ufw:
     rule: allow
