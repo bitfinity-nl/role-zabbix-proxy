@@ -1,5 +1,5 @@
 ---
-dependencies: []
+dependencies:
   - src: https://github.com/bitfinity-nl/role-mariadb-docker.git
     scm: git 
     version: main
