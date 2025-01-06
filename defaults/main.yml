@@ -48,17 +48,6 @@ zabbix_proxy_logremotecommands    : '1'
 #
 zabbix_install_version                 : '7'
 zabbix_install_mariadb_docker_version  : '11.4.4-noble'
-# Docker images
-zabbix_proxy_docker_image              : 'ubuntu-7.0-latest'
-zabbix_proxy_docker_proxymode          : '0'
-zabbix_proxy_docker_hostname           : '{{ ansible_hostname }}'
-zabbix_proxy_docker_server_host        : 'zabbix.example.com:10051'
-zabbix_proxy_docker_db_server_host     : ''
-zabbix_proxy_docker_db_server_port     : ''
-zabbix_proxy_docker_dbuser             : ''
-zabbix_proxy_docker_dbpass             : ''
-
-
 zabbix_repository:
   - { version                     : '7',
       ubuntu_source               : 'https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu{{ ansible_distribution_version }}_all.deb',
