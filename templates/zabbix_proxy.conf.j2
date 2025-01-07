@@ -76,6 +76,8 @@ ListenPort={{ zabbix_proxy_listenport }}
 # Default:
 # LogType=file
 
+LogType={{ zabbix_proxy_logtype }}
+
 ### Option: LogFile
 #	Log file name for LogType 'file' parameter.
 #
@@ -94,7 +96,7 @@ LogFile={{ zabbix_proxy_logfile }}
 # Default:
 # LogFileSize=1
 
-LogFileSize={{ zabbix_proxy_LogFileSize }}
+LogFileSize={{ zabbix_proxy_logfilesize }}
 
 ### Option: DebugLevel
 #	Specifies debug level:
@@ -109,6 +111,7 @@ LogFileSize={{ zabbix_proxy_LogFileSize }}
 # Range: 0-5
 # Default:
 # DebugLevel=3
+DebugLevel={{ zabbix_proxy_debuglevel }}
 
 ### Option: EnableRemoteCommands
 #		Whether remote commands from Zabbix server are allowed.
@@ -137,7 +140,7 @@ LogRemoteCommands={{ zabbix_proxy_logremotecommands }}
 # Default:
 # PidFile=/tmp/zabbix_proxy.pid
 
-PidFile=/run/zabbix/zabbix_proxy.pid
+PidFile={{ zabbix_proxy_pidfile }}
 
 ### Option: SocketDir
 #	IPC socket directory.
@@ -147,7 +150,7 @@ PidFile=/run/zabbix/zabbix_proxy.pid
 # Default:
 # SocketDir=/tmp
 
-SocketDir=/run/zabbix
+SocketDir={{ zabbix_proxy_socketdir }}
 
 ### NOTE: Support for Oracle DB is deprecated since Zabbix 7.0 and will be removed in future versions.
 
@@ -236,6 +239,7 @@ DBPassword={{ zabbix_proxy_dbpass }}
 # Range: 0-720
 # Default:
 # ProxyLocalBuffer=0
+ProxyLocalBuffer={{ zabbix_proxy_proxylocalbuffer }}
 
 ### Option: ProxyOfflineBuffer
 #	Proxy will keep data for N hours in case if no connectivity with Zabbix Server.
@@ -245,6 +249,7 @@ DBPassword={{ zabbix_proxy_dbpass }}
 # Range: 1-720
 # Default:
 # ProxyOfflineBuffer=1
+ProxyOfflineBuffer={{ zabbix_proxy_proxyofflinebuffer }}
 
 ### Option: ProxyBufferMode
 #	Specifies history, discovery and auto registration data storage mechanism:
@@ -263,7 +268,7 @@ DBPassword={{ zabbix_proxy_dbpass }}
 # Default:
 # ProxyBufferMode=disk
 
-ProxyBufferMode=hybrid
+ProxyBufferMode={{ zabbix_proxy_proxybuffermode }}
 
 ### Option: ProxyMemoryBufferSize
 #	Size of shared memory cache for collected history, discovery and auto registration data, in bytes.
@@ -276,7 +281,7 @@ ProxyBufferMode=hybrid
 # Default:
 # ProxyMemoryBufferSize=0
 
-ProxyMemoryBufferSize=16M
+ProxyMemoryBufferSize={{ zabbix_proxy_proxymemorybuffersize }}
 
 ### Option: ProxyMemoryBufferAge
 #	Maximum age of data in proxy memory buffer, in seconds.
@@ -288,6 +293,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0,600-864000
 # Default:
 # ProxyMemoryBufferAge=0
+ProxyMemoryBufferAge={{ zabbix_proxy_proxymemorybufferage }}
 
 ### Option: ConfigFrequency - Deprecated, use ProxyConfigFrequency
 #	How often proxy retrieves configuration data from Zabbix Server in seconds.
@@ -302,6 +308,7 @@ ProxyMemoryBufferSize=16M
 # Range: 1-3600*24*7
 # Default:
 # ProxyConfigFrequency=10
+ProxyConfigFrequency={{ zabbix_proxy_proxyconfigfrequency }}
 
 ### Option: DataSenderFrequency
 #	Proxy will send collected data to the Server every N seconds.
@@ -311,6 +318,7 @@ ProxyMemoryBufferSize=16M
 # Range: 1-3600
 # Default:
 # DataSenderFrequency=1
+DataSenderFrequency={{ zabbix_proxy_datasenderfrequency }}
 
 ############ ADVANCED PARAMETERS ################
 
@@ -321,6 +329,8 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartPollers=5
+StartPollers={{ zabbix_proxy_startpollers }}
+
 
 ### Option: StartAgentPollers
 #	Number of pre-forked instances of asynchronous Zabbix agent pollers. Also see MaxConcurrentChecksPerPoller.
@@ -329,6 +339,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartAgentPollers=1
+StartAgentPollers={{ zabbix_proxy_startagentpollers }}
 
 ### Option: StartHTTPAgentPollers
 #	Number of pre-forked instances of asynchronous HTTP agent pollers. Also see MaxConcurrentChecksPerPoller.
@@ -337,6 +348,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartHTTPAgentPollers=1
+StartHTTPAgentPollers={{ zabbix_proxy_starthttpagentpollers }}
 
 ### Option: StartSNMPPollers
 #	Number of pre-forked instances of asynchronous SNMP pollers. Also see MaxConcurrentChecksPerPoller.
@@ -345,6 +357,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartSNMPPollers=1
+StartSNMPPollers={{ zabbix_proxy_startagentsnmppollers }}
 
 ### Option: MaxConcurrentChecksPerPoller
 #	Maximum number of asynchronous checks that can be executed at once by each HTTP agent poller or agent poller.
@@ -353,6 +366,7 @@ ProxyMemoryBufferSize=16M
 # Range: 1-1000
 # Default:
 # MaxConcurrentChecksPerPoller=1000
+MaxConcurrentChecksPerPoller={{ zabbix_proxy_maxconcurrentchecksperpoller }}
 
 ### Option: StartIPMIPollers
 #	Number of pre-forked instances of IPMI pollers.
@@ -372,6 +386,7 @@ ProxyMemoryBufferSize=16M
 # Range: 1-1000
 # Default:
 # StartPreprocessors=16
+StartPreprocessors={{ zabbix_proxy_startpreprocessors }}
 
 ### Option: StartPollersUnreachable
 #	Number of pre-forked instances of pollers for unreachable hosts (including IPMI and Java).
@@ -382,6 +397,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartPollersUnreachable=1
+StartPollersUnreachable={{ zabbix_proxy_startpollersunreachable }}
 
 ### Option: StartTrappers
 #	Number of pre-forked instances of trappers.
@@ -391,6 +407,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartTrappers=5
+StartTrappers={{ zabbix_proxy_starttrappers }}
 
 ### Option: StartPingers
 #	Number of pre-forked instances of ICMP pingers.
@@ -399,6 +416,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartPingers=1
+StartPingers={{ zabbix_proxy_startpingers }}
 
 ### Option: StartDiscoverers
 #	Number of pre-started instances of discovery workers.
@@ -407,6 +425,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartDiscoverers=5
+StartDiscoverers={{ zabbix_proxy_startdiscoverers }}
 
 ### Option: StartHTTPPollers
 #	Number of pre-forked instances of HTTP pollers.
@@ -415,6 +434,7 @@ ProxyMemoryBufferSize=16M
 # Range: 0-1000
 # Default:
 # StartHTTPPollers=1
+StartHTTPPollers={{ zabbix_proxy_starthttppollers }}
 
 ### Option: JavaGateway
 #	IP address (or hostname) of Zabbix Java gateway.
