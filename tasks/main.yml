@@ -11,9 +11,3 @@
   include_tasks: tasks/zabbix-proxy-version.yml
   with_items: "{{ zabbix_repository }}"
   when: ansible_distribution == "Ubuntu"
-
-- name: "Allow SSHD"
-  community.general.ufw:
-    policy: allow
-    rule: OpenSSH
-    state: enabled
