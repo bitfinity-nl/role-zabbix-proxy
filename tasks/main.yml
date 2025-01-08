@@ -11,3 +11,10 @@
   include_tasks: tasks/zabbix-proxy-version.yml
   with_items: "{{ zabbix_repository }}"
   when: ansible_distribution == "Ubuntu"
+
+- name: "Allow everything and enable UFW"
+  community.general.ufw:
+    rule: OpenSSH
+    policy: allow
+    state: enabled
+    policy: allow
