@@ -12,9 +12,8 @@
   with_items: "{{ zabbix_repository }}"
   when: ansible_distribution == "Ubuntu"
 
-- name: "Allow everything and enable UFW"
+- name: "Allow SSHD"
   community.general.ufw:
+    policy: allow
     rule: OpenSSH
-    policy: allow
     state: enabled
-    policy: allow
