@@ -29,16 +29,27 @@
   loop_control:
     loop_var: packages
     
-- name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
+#- name: "Create initial database on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
+#  community.mysql.mysql_db:
+#    login_host: "127.0.0.1"
+#    login_user: "{{ zabbix_proxy_administrative_user }}"
+#    login_password: "{{ zabbix_proxy_administrative_pass }}"
+#    name: "{{ zabbix_proxy_dbname }}"
+#    encoding: utf8mb4
+#    collation: utf8mb4_bin
+#    state: present
+#  no_log: false
+
+- name: "Create Zabbix database '{{ zabbix_proxy_dbname }}' on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_db:
-    login_host: "127.0.0.1"
-    login_user: "{{ zabbix_proxy_administrative_user }}"
-    login_password: "{{ zabbix_proxy_administrative_pass }}"
     name: "{{ zabbix_proxy_dbname }}"
     encoding: utf8mb4
     collation: utf8mb4_bin
     state: present
-  no_log: false
+    login_host: "127.0.0.1"
+    login_user: "{{ zabbix_proxy_administrative_user }}"
+    login_password: "{{ zabbix_proxy_administrative_pass }}"
+  no_log: True
 
 - name: "Create initial database user on host '{{ ansible_hostname }}' in docker container 'mariadb' on host '{{ ansible_hostname }}'"
   community.mysql.mysql_user:
