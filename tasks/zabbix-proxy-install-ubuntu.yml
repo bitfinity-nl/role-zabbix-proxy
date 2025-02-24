@@ -53,6 +53,9 @@
     name: "{{ zabbix_proxy_dbuser }}"
     password: "{{ zabbix_proxy_dbpass }}"
     priv: "{{ zabbix_proxy_dbname }}.*:ALL,GRANT"
+    host:
+      - localhost
+      - 172.17.0.1
     state: present
   no_log: True
     
