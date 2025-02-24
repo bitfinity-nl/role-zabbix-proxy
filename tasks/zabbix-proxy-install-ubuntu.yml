@@ -57,7 +57,7 @@
     state: present
   loop:
     - localhost
-    - 172.17.0.1
+    - %
   loop_control:
     loop_var: var_mysql_hosts
   no_log: True
