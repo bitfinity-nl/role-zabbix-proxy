@@ -57,7 +57,7 @@
     state: present
   loop:
     - localhost
-    - %
+    - '%'
   loop_control:
     loop_var: var_mysql_hosts
   no_log: True
